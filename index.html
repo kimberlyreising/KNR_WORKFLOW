@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KNR Studio — Fine Art Prints & Commissions</title>
+<style>
+  :root{
+    --ink:#0B0B0D; --bone:#EDEAE3; --rust:#C1440E; --line:#2A2A2D; --dim:#9C978D;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--ink); color:var(--bone); font-family:'Georgia',serif; line-height:1.5;}
+  h1,h2,h3{font-family:'Georgia',serif; font-weight:400; letter-spacing:.01em;}
+  .sans{font-family:Arial, Helvetica, sans-serif;}
+  header{display:flex; justify-content:space-between; align-items:center; padding:28px 6vw; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(11,11,13,.92); backdrop-filter:blur(6px); z-index:10;}
+  .logo{font-size:20px; letter-spacing:.18em; text-transform:uppercase;}
+  .logo span{color:var(--rust);}
+  nav a{color:var(--dim); text-decoration:none; margin-left:32px; font-family:Arial,sans-serif; font-size:13px; letter-spacing:.08em; text-transform:uppercase;}
+  nav a:hover{color:var(--bone);}
+  .hero{padding:14vh 6vw 10vh; border-bottom:1px solid var(--line); position:relative; overflow:hidden;}
+  .thread{position:absolute; top:0; right:8vw; width:1px; height:100%; background:linear-gradient(var(--rust), transparent);}
+  .eyebrow{font-family:Arial,sans-serif; letter-spacing:.25em; text-transform:uppercase; font-size:12px; color:var(--rust); margin-bottom:22px;}
+  .hero h1{font-size:clamp(38px,6vw,74px); max-width:14ch; margin-bottom:26px;}
+  .hero p{max-width:52ch; color:var(--dim); font-size:17px; margin-bottom:38px;}
+  .cta{display:inline-block; background:var(--rust); color:var(--ink); text-decoration:none; padding:16px 34px; font-family:Arial,sans-serif; font-size:13px; letter-spacing:.1em; text-transform:uppercase; font-weight:700;}
+  .cta.outline{background:transparent; border:1px solid var(--bone); color:var(--bone); margin-left:16px;}
+  section{padding:9vh 6vw; border-bottom:1px solid var(--line);}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:2px; background:var(--line);}
+  .piece{background:var(--ink); padding:40px 30px;}
+  .piece .frame{aspect-ratio:4/5; background:#151517; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; color:var(--dim); font-family:Arial,sans-serif; font-size:12px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:20px; overflow:hidden;}
+  .piece .frame img{width:100%; height:100%; object-fit:cover; display:block;}
+  .piece h3{font-size:20px; margin-bottom:6px;}
+  .piece .price{color:var(--rust); font-family:Arial,sans-serif; font-size:15px; margin-bottom:14px;}
+  .piece a{color:var(--bone); font-family:Arial,sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; border-bottom:1px solid var(--rust); padding-bottom:2px; text-decoration:none;}
+  .tiers{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px; margin-top:20px;}
+  .tier{border:1px solid var(--line); padding:34px;}
+  .tier h3{font-size:22px; margin-bottom:10px;}
+  .tier .price{font-family:Arial,sans-serif; font-size:28px; color:var(--rust); margin-bottom:18px;}
+  .tier ul{list-style:none; font-family:Arial,sans-serif; font-size:14px; color:var(--dim);}
+  .tier li{padding:8px 0; border-top:1px solid var(--line);}
+  .tier li:first-child{border-top:none;}
+  form{max-width:480px; margin-top:24px;}
+  input{width:100%; background:transparent; border:none; border-bottom:1px solid var(--line); color:var(--bone); padding:14px 0; font-family:Arial,sans-serif; margin-bottom:18px; font-size:15px;}
+  input::placeholder{color:var(--dim);}
+  input:focus{outline:none; border-color:var(--rust);}
+  footer{padding:6vh 6vw; font-family:Arial,sans-serif; font-size:12px; color:var(--dim); display:flex; justify-content:space-between;}
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;}
+  .section-head h2{font-size:clamp(28px,3.5vw,42px);}
+  .section-head p{color:var(--dim); font-family:Arial,sans-serif; font-size:13px; max-width:30ch;}
+  .about{display:grid; grid-template-columns:.9fr 1.1fr; gap:50px; align-items:center;}
+  .about img{width:100%; aspect-ratio:4/5; object-fit:cover; border:1px solid var(--line);}
+  .about-text p{color:var(--dim); font-size:16px; margin-bottom:18px; max-width:52ch;}
+  .about-text p:first-child{color:var(--bone); font-size:18px;}
+  @media (max-width:700px){.about{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">K.N.<span>R</span>eising</div>
+  <nav>
+    <a href="#work">Work</a>
+    <a href="#prints">Prints</a>
+    <a href="#commission">Commissions</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="thread"></div>
+  <div class="eyebrow">Philadelphia — Surrealism / Bio-organic / Female Noir</div>
+  <h1>Figures mid-transformation, rendered in thread, light, and unresolved edges.</h1>
+  <p>Original mixed-media works, limited archival prints, and one-on-one commissions from artist Kimberly Nichole Reising. Each piece begins as a drawing and ends somewhere between the body and the myth.</p>
+  <a href="#prints" class="cta">Shop Prints</a>
+  <a href="#commission" class="cta outline">Commission a Piece</a>
+</section>
+
+<section id="prints">
+  <div class="section-head">
+    <h2>Limited Edition Prints</h2>
+    <p class="sans">Archival giclée, numbered, signed. Ships in 5–7 days.</p>
+  </div>
+  <div class="grid">
+    <div class="piece"><div class="frame"><img src="images/herself.jpg" alt="Herself, mixed media drawing by Kimberly Nichole Reising"></div><h3>Herself</h3><div class="price">$185 — 18×24"</div><a href="https://buy.stripe.com/6oU7sL5K6cwBeGg1ZI7EQ00">Buy Print →</a></div>
+    <div class="piece"><div class="frame"><img src="images/america250.jpg" alt="Philadelphia America 250, mixed media by Kimberly Nichole Reising"></div><h3>Philadelphia — America 250</h3><div class="price">$140 — 16×20"</div><a href="#">Buy Print →</a></div>
+    <div class="piece"><div class="frame"><img src="images/darkflower.png" alt="Dark Flower, The Lounge, digital pattern by Kimberly Nichole Reising"></div><h3>Dark Flower — The Lounge</h3><div class="price">$140 — 16×20"</div><a href="https://buy.stripe.com/8x2aEXa0mgMR69K6fY7EQ06">Buy Print →</a></div>
+    <div class="piece"><div class="frame">Halo text study</div><h3>Chorus</h3><div class="price">$95 — 11×14"</div><a href="#">Buy Print →</a></div>
+    <div class="piece"><div class="frame"><img src="images/jokeisonyou.png" alt="Joke (Joker) Is On You, mixed media by Kimberly Nichole Reising"></div><h3>Joke (Joker) Is On You</h3><div class="price">$500</div><a href="https://buy.stripe.com/9B600j5K6405cy89sa7EQ03">Buy Print →</a></div>
+    <div class="piece"><div class="frame"><img src="images/corsetstitched.jpg" alt="Corset Stitched, mixed media by Kimberly Nichole Reising"></div><h3>Corset Stitched</h3><div class="price">$1,500</div><a href="#">Buy Print →</a></div>
+    <div class="piece"><div class="frame"><img src="images/whatliesin.jpg" alt="What Lies Within, mixed media by Kimberly Nichole Reising"></div><h3>What Lies Within</h3><div class="price">$500</div><a href="https://buy.stripe.com/6oU28r6OacwBaq09sa7EQ08">Buy Print →</a></div>
+  </div>
+</section>
+
+<section id="commission">
+  <div class="section-head">
+    <h2>Commission Tiers</h2>
+    <p class="sans">Every commission includes concept notes and a working sketch before final execution.</p>
+  </div>
+  <div class="tiers">
+    <div class="tier">
+      <h3>Study</h3>
+      <div class="price">$400</div>
+      <ul>
+        <li>Single subject, graphite or ink</li>
+        <li>11×14", one revision</li>
+        <li>2–3 week turnaround</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <h3>Full Piece</h3>
+      <div class="price">$1,200</div>
+      <ul>
+        <li>Mixed-media, full color</li>
+        <li>18×24", two revisions</li>
+        <li>4–6 week turnaround</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <h3>Signature</h3>
+      <div class="price">$3,000+</div>
+      <ul>
+        <li>Large scale, thread/embroidery detail</li>
+        <li>24×36" or larger, full concept development</li>
+        <li>8–12 week turnaround</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-head">
+    <h2>About the Artist</h2>
+  </div>
+  <div class="about">
+    <img src="images/headshot.jpg" alt="Kimberly Nichole Reising, artist">
+    <div class="about-text">
+      <p>Kimberly Nichole Reising is a Philadelphia-based visual artist and fine art model working across graphite, colored pencil, mixed media, and digital rendering.</p>
+      <p>A graduate of the University of the Arts Philadelphia, her work moves through surrealism, dark fantasy, bio-organic form, and a self-described "female noir" sensibility — figures caught mid-transformation, rendered in thread, light, and unresolved edges.</p>
+      <p>Reising is the grand prize winner of Philadelphia's America 250 design contest. Her work has shown at Philadelphia City Hall and been submitted to national and regional juried exhibitions.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-head">
+    <h2>Start a Commission</h2>
+    <p class="sans">Tell me about the piece. I'll reply with availability and a quote.</p>
+  </div>
+  <form action="https://formspree.io/f/xrenkveq" method="POST">
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="text" name="message" placeholder="What are you envisioning?" required>
+    <button type="submit" class="cta" style="border:none; cursor:pointer;">Send Inquiry</button>
+  </form>
+</section>
+
+<footer>
+  <span>© KNR Studio — Kimberly Nichole Reising</span>
+  <span>Philadelphia, PA</span>
+</footer>
+
+</body>
+</html>
