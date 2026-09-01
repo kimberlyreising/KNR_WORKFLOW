@@ -1,3 +1,5 @@
+[![KNR Site Audit](https://github.com/kimberlyreising/KNR_WORKFLOW/actions/workflows/site-audit.yml/badge.svg)](https://github.com/kimberlyreising/KNR_WORKFLOW/actions/workflows/site-audit.yml)
+
 Kimberly Nichole Reising works at the intersection of fine art, engineering, mathematics, perception, and visual systems, creating hand-drawn works that are not simply composed, but constructed to continue operating in the viewer’s perception.
 Her current practice deliberately integrates multiple technical and perceptual systems within a single image, including delayed recognition, visual memory, visual persistence, cognitive residue, mathematical proportion, recursive geometry, mirroring, rotation, reflection, and hinged repetition. Fibonacci relationships, the golden ratio, π, circular geometries, directional fields, repetition, and proportional structures may be embedded within the composition without demanding that the viewer consciously identify or decode them.
 The objective is not visual complexity for its own sake. The work is full, but it is not crowded. Information exists at multiple perceptual depths.
