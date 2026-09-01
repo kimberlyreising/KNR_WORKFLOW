@@ -1,4 +1,4 @@
-name: KNR Site Audit
+name: KNR Checks & Balances
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   audit:
-    name: Audit artwork shop
+    name: KNR_CHECK
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -25,5 +25,5 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Run KNR site audit
+      - name: Run KNR checks and balances
         run: python scripts/audit_site.py
