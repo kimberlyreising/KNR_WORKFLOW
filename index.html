@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KNR Studio — Fine Art Prints & Commissions</title>
+<script src="assets/studio-config.js" defer></script>
+<script src="assets/studio.js" defer></script>
 <style>
   :root{
     --ink:#0B0B0D; --bone:#EDEAE3; --rust:#C1440E; --line:#2A2A2D; --dim:#9C978D;
@@ -53,6 +55,7 @@
   .about-text p:first-child{color:var(--bone); font-size:18px;}
   @media (max-width:700px){.about{grid-template-columns:1fr;}}
 </style>
+<link rel="stylesheet" href="assets/studio.css">
 </head>
 <body>
 
@@ -66,6 +69,7 @@
     <a href="#commission">Commissions</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
+    <a href="#studio-updates">Studio Updates</a>
   </nav>
 </header>
 
@@ -76,6 +80,7 @@
   <p>Original mixed-media works, limited archival prints, and one-on-one commissions from artist Kimberly Nichole Reising. Each piece begins as a drawing and ends somewhere between the body and the myth.</p>
   <a href="#prints" class="cta">Shop Prints</a>
   <a href="#commission" class="cta outline">Commission a Piece</a>
+  <a href="#studio-updates" class="studio-follow">Follow new drawings and studio releases</a>
 </section>
 
 <section id="prints">
@@ -134,6 +139,27 @@
   </div>
 </section>
 
+<section id="studio-updates" class="studio-signup" aria-labelledby="studio-updates-title">
+  <div>
+    <div class="eyebrow">Inside the studio</div>
+    <h2 id="studio-updates-title">Follow the work as it unfolds.</h2>
+    <p>New hand-drawn artwork, works in progress, exhibitions and print releases from Kimberly Nichole Reising.</p>
+  </div>
+  <form id="studio-signup-form" action="https://formspree.io/f/xrenkveq" method="POST" aria-describedby="studio-signup-note">
+    <input type="hidden" name="subject" value="KNR Studio — email signup">
+    <input type="hidden" name="source" value="studio_updates_signup">
+    <input type="hidden" name="message" value="Please add me to Kimberly Nichole Reising's studio email updates.">
+    <input type="hidden" name="consent_version" value="studio-updates-2026-10-02">
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" hidden>
+    <label for="studio-signup-email">Email address</label>
+    <input id="studio-signup-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" maxlength="254" required>
+    <label class="studio-consent"><input type="checkbox" name="studio_updates_consent" value="yes" required><span>Yes, I'd like email updates from Kimberly's studio.</span></label>
+    <button type="submit" class="cta">Join Studio Updates</button>
+    <p id="studio-signup-status" class="studio-status" role="status" aria-live="polite" aria-atomic="true"></p>
+    <p id="studio-signup-note" class="studio-note">Free to join. Your email is used for studio updates. You can request removal through <a href="#contact">the contact form</a>. <a href="#studio-privacy">Privacy details</a>.</p>
+  </form>
+</section>
+
 <section id="about">
   <div class="section-head">
     <h2>About the Artist</h2>
@@ -161,10 +187,25 @@
   </form>
 </section>
 
-<footer>
+<footer class="studio-footer">
   <span>© KNR Studio — Kimberly Nichole Reising</span>
   <span>Philadelphia, PA</span>
+  <details id="studio-privacy" class="studio-privacy">
+    <summary>Email and analytics privacy</summary>
+    <p>If you ask to join studio updates, your email and consent are submitted to Formspree, the service used for this site's contact forms, so Kimberly can manage your request. Email signups are separate from analytics. To request removal, use <a href="#contact">the contact form</a> and include the email address you signed up with.</p>
+    <p>When enabled, Google Analytics measures visits and site interactions only after you allow it. Your email and contact-form entries are not sent by this site's analytics code. Analytics may use cookies and process browser and network information. Declining analytics does not affect email signup or purchases.</p>
+    <button id="studio-analytics-settings" class="studio-settings" type="button" hidden>Analytics preferences</button>
+  </details>
 </footer>
+
+<aside id="studio-cookie" class="studio-cookie" aria-labelledby="studio-cookie-title" hidden>
+  <h2 id="studio-cookie-title">Allow visitor analytics?</h2>
+  <p>Help Kimberly see how people discover her work. Google Analytics measures visits and clicks. Your email signup is separate, and you can change your choice in the footer.</p>
+  <div class="studio-cookie-actions">
+    <button type="button" data-consent="allow">Allow analytics</button>
+    <button type="button" data-consent="decline">Decline analytics</button>
+  </div>
+</aside>
 
 </body>
 </html>
