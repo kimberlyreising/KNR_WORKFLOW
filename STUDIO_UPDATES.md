@@ -39,10 +39,11 @@ people, and do not reconstruct visits from before activation.
 | `page_view` | One page load after analytics permission |
 | `section_click` | Click to Prints, Commissions, About, Contact or Studio Updates |
 | `stripe_click` | Print checkout click, with artwork title; **not a confirmed sale** |
+| `support_click` | Click to a KNR Studio support checkout, with support tier; **not a confirmed payment** |
 | `generate_lead` | Formspree accepted a studio signup request |
 
 View Users, Views and Traffic acquisition in Google Analytics. Register
-`artwork_title`, `section_id` and `lead_type` as event-scoped custom dimensions to
+`artwork_title`, `support_tier`, `section_id` and `lead_type` as event-scoped custom dimensions to
 break down those events. Stripe remains the source for actual purchase totals.
 
 ## Verification and deployment
