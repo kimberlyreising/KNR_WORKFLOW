@@ -3,6 +3,9 @@
   const form = document.getElementById("studio-signup-form");
   const status = document.getElementById("studio-signup-status");
   const measurementId = (window.KNR_STUDIO || {}).measurementId || "";
+  const supportLinks = (window.KNR_STUDIO || {}).supportLinks || {};
+  const supportSection = document.getElementById("support");
+  const stripeUrl = value => /^https:\\/\\/buy\\.stripe\\.com\\/[A-Za-z0-9]+/.test(value || "");
   const configured = /^G-[A-Z0-9]+$/.test(measurementId);
   const preferenceKey = "knr-analytics-consent-v1";
   const panel = document.getElementById("studio-cookie");
@@ -13,6 +16,22 @@
   const readPreference = () => { try { return localStorage.getItem(preferenceKey); } catch { return null; } };
   const savePreference = value => { try { localStorage.setItem(preferenceKey, value); } catch { /* This visit still respects the choice. */ } };
   const referrerOrigin = () => { try { return new URL(document.referrer).origin; } catch { return ""; } };
+  let supportConfigured = false;
+  document.querySelectorAll("[data-support-link]").forEach(anchor => {
+    const key = anchor.dataset.supportLink;
+    const url = supportLinks[key];
+    if (!stripeUrl(url)) {
+      anchor.removeAttribute("href");
+      anchor.setAttribute("aria-disabled", "true");
+      anchor.tabIndex = -1;
+      return;
+    }
+    anchor.href = url;
+    anchor.removeAttribute("aria-disabled");
+    supportConfigured = true;
+  });
+  if (supportSection) supportSection.hidden = !supportConfigured;
+
   document.querySelectorAll('a[href="#studio-privacy"]').forEach(anchor => {
     anchor.addEventListener("click", () => { document.getElementById("studio-privacy").open = true; });
   });
@@ -100,7 +119,7 @@
       if (/^https:\/\/buy\.stripe\.com\//.test(href)) {
         const card = anchor.closest(".piece");
         track("stripe_click", { artwork_title: card?.querySelector("h3")?.textContent.trim() || "Print" });
-      } else if (/^#(prints|commission|about|contact|studio-updates)$/.test(href)) {
+      } else if (/^#(prints|support|commission|about|contact|studio-updates)$/.test(href)) {
         track("section_click", { section_id: href.slice(1) });
       }
     });
