@@ -117,8 +117,13 @@
       if (!anchor) return;
       const href = anchor.getAttribute("href");
       if (/^https:\/\/buy\.stripe\.com\//.test(href)) {
-        const card = anchor.closest(".piece");
-        track("stripe_click", { artwork_title: card?.querySelector("h3")?.textContent.trim() || "Print" });
+        const supportKey = anchor.dataset.supportLink;
+        if (supportKey) {
+          track("support_click", { support_tier: supportKey });
+        } else {
+          const card = anchor.closest(".piece");
+          track("stripe_click", { artwork_title: card?.querySelector("h3")?.textContent.trim() || "Print" });
+        }
       } else if (/^#(prints|support|commission|about|contact|studio-updates)$/.test(href)) {
         track("section_click", { section_id: href.slice(1) });
       }
