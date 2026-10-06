@@ -1,3 +1,11 @@
-// Set this to the web stream Measurement ID from Kimberly's Google Analytics account.
-// Analytics stays off until a real ID is configured and the visitor allows it.
-window.KNR_STUDIO = Object.freeze({ measurementId: "" });
+// Central KNR Studio configuration.
+// Analytics stays off until a real Google Analytics Measurement ID is configured.
+// Support stays hidden until at least one valid Stripe Payment Link is configured.
+window.KNR_STUDIO = Object.freeze({
+  measurementId: "",
+  supportLinks: Object.freeze({
+    oneTime: "",
+    monthly5: "",
+    monthly10: ""
+  })
+});
