@@ -5,7 +5,7 @@
   const measurementId = (window.KNR_STUDIO || {}).measurementId || "";
   const supportLinks = (window.KNR_STUDIO || {}).supportLinks || {};
   const supportSection = document.getElementById("support");
-  const stripeUrl = value => /^https:\\/\\/buy\\.stripe\\.com\\/[A-Za-z0-9]+/.test(value || "");
+  const stripeUrl = value => { try { const u = new URL(value); return u.protocol === "https:" && u.hostname === "buy.stripe.com" && /^\/[A-Za-z0-9]+$/.test(u.pathname); } catch { return false; } };
   const configured = /^G-[A-Z0-9]+$/.test(measurementId);
   const preferenceKey = "knr-analytics-consent-v1";
   const panel = document.getElementById("studio-cookie");
