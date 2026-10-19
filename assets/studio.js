@@ -37,7 +37,7 @@
   });
 
   function track(name, properties = {}) {
-    if (!configured || !allowed || typeof window.gtag !== "function") return;
+    if (!configured || !initialized || window["ga-disable-" + measurementId] === true || typeof window.gtag !== "function") return;
     // Only callers' fixed section IDs and artwork titles are used. Never read form fields.
     window.gtag("event", name, {
       send_to: measurementId,
@@ -47,20 +47,19 @@
     });
   }
 
-  function startAnalytics() {
-    allowed = true;
-    window["ga-disable-" + measurementId] = false;
-    if (initialized) {
-      window.gtag("consent", "update", { analytics_storage: "granted" });
-      return;
-    }
+  // Advanced Consent Mode: while the visitor has not decided, GA4 receives
+  // cookieless signals for aggregate/modelled measurement. Existing declines
+  // stop the tag entirely. No analytics cookies before an explicit grant.
+  function initializeAnalytics(consented) {
     initialized = true;
+    window["ga-disable-" + measurementId] = false;
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () { window.dataLayer.push(arguments); };
     window.gtag("consent", "default", {
-      analytics_storage: "granted", ad_storage: "denied",
+      analytics_storage: "denied", ad_storage: "denied",
       ad_user_data: "denied", ad_personalization: "denied"
     });
+    if (consented) window.gtag("consent", "update", { analytics_storage: "granted" });
     window.gtag("js", new Date());
     window.gtag("config", measurementId, {
       send_page_view: false,
@@ -74,6 +73,12 @@
     script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(measurementId);
     document.head.appendChild(script);
     track("page_view", { page_title: document.title });
+  }
+
+  function startAnalytics() {
+    window["ga-disable-" + measurementId] = false;
+    if (!initialized) return initializeAnalytics(true);
+    window.gtag("consent", "update", { analytics_storage: "granted" });
   }
 
   function stopAnalytics() {
@@ -96,7 +101,10 @@
     settings.hidden = false;
     const preference = readPreference();
     if (preference === "allow") startAnalytics();
-    else if (preference !== "decline") panel.hidden = false;
+    else if (preference !== "decline") {
+      initializeAnalytics(false);
+      panel.hidden = false;
+    }
     settings.addEventListener("click", () => {
       previousFocus = settings;
       panel.hidden = false;
