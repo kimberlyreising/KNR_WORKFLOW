@@ -8,11 +8,8 @@
   const stripeUrl = value => { try { const u = new URL(value); return u.protocol === "https:" && u.hostname === "buy.stripe.com" && /^\/[A-Za-z0-9]+$/.test(u.pathname); } catch { return false; } };
   const configured = /^G-[A-Z0-9]+$/.test(measurementId);
   const preferenceKey = "knr-analytics-consent-v1";
-  const panel = document.getElementById("studio-cookie");
   const settings = document.getElementById("studio-analytics-settings");
-  let allowed = false;
   let initialized = false;
-  let previousFocus = null;
   const readPreference = () => { try { return localStorage.getItem(preferenceKey); } catch { return null; } };
   const savePreference = value => { try { localStorage.setItem(preferenceKey, value); } catch { /* This visit still respects the choice. */ } };
   const referrerOrigin = () => { try { return new URL(document.referrer).origin; } catch { return ""; } };
@@ -47,19 +44,17 @@
     });
   }
 
-  // Advanced Consent Mode: while the visitor has not decided, GA4 receives
-  // cookieless signals for aggregate/modelled measurement. Existing declines
-  // stop the tag entirely. No analytics cookies before an explicit grant.
-  function initializeAnalytics(consented) {
+  // GA4 is enabled automatically unless this browser previously opted out.
+  // Advertising-related consent remains denied. Persisted opt-outs stay off.
+  function initializeAnalytics() {
     initialized = true;
     window["ga-disable-" + measurementId] = false;
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () { window.dataLayer.push(arguments); };
     window.gtag("consent", "default", {
-      analytics_storage: "denied", ad_storage: "denied",
+      analytics_storage: "granted", ad_storage: "denied",
       ad_user_data: "denied", ad_personalization: "denied"
     });
-    if (consented) window.gtag("consent", "update", { analytics_storage: "granted" });
     window.gtag("js", new Date());
     window.gtag("config", measurementId, {
       send_page_view: false,
@@ -77,12 +72,11 @@
 
   function startAnalytics() {
     window["ga-disable-" + measurementId] = false;
-    if (!initialized) return initializeAnalytics(true);
+    if (!initialized) return initializeAnalytics();
     window.gtag("consent", "update", { analytics_storage: "granted" });
   }
 
   function stopAnalytics() {
-    allowed = false;
     window["ga-disable-" + measurementId] = true;
     if (initialized) window.gtag("consent", "update", { analytics_storage: "denied" });
     // Remove this property's first-party cookies when permission is withdrawn.
@@ -98,28 +92,30 @@
   }
 
   if (configured) {
-    settings.hidden = false;
-    const preference = readPreference();
-    if (preference === "allow") startAnalytics();
-    else if (preference !== "decline") {
-      initializeAnalytics(false);
-      panel.hidden = false;
+    // No interruptive consent banner. The footer offers a one-click opt-out.
+    // Visitors who already declined remain opted out.
+    if (readPreference() === "decline") {
+      window["ga-disable-" + measurementId] = true;
+    } else {
+      startAnalytics();
     }
-    settings.addEventListener("click", () => {
-      previousFocus = settings;
-      panel.hidden = false;
-      panel.querySelector("button").focus();
-    });
-    panel.querySelectorAll("button[data-consent]").forEach(button => {
-      button.addEventListener("click", () => {
-        const choice = button.dataset.consent;
-        savePreference(choice);
-        if (choice === "allow") startAnalytics(); else stopAnalytics();
-        panel.hidden = true;
-        if (previousFocus) previousFocus.focus();
-        else document.getElementById("studio-signup-email").focus({ preventScroll: true });
+    if (settings) {
+      settings.hidden = false;
+      const updateSettingsLabel = () => {
+        settings.textContent = readPreference() === "decline" ? "Turn on analytics" : "Turn off analytics";
+      };
+      updateSettingsLabel();
+      settings.addEventListener("click", () => {
+        if (readPreference() === "decline") {
+          savePreference("allow");
+          startAnalytics();
+        } else {
+          savePreference("decline");
+          stopAnalytics();
+        }
+        updateSettingsLabel();
       });
-    });
+    }
     document.addEventListener("click", event => {
       const anchor = event.target.closest("a[href]");
       if (!anchor) return;
