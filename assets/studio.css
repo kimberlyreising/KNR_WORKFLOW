@@ -12,17 +12,17 @@
 .studio-signup .studio-note{margin-top:12px;font:14px/1.5 Arial,sans-serif;}
 .studio-note a,.studio-follow,.studio-privacy a{color:var(--bone);text-underline-offset:4px;}
 .studio-follow{display:block;margin-top:24px;font:14px/1.5 Arial,sans-serif;max-width:max-content;}
-.studio-signup input:focus-visible,.studio-signup button:focus-visible,.studio-follow:focus-visible,.studio-cookie button:focus-visible,.studio-settings:focus-visible{outline:2px solid var(--bone);outline-offset:5px;}
+.studio-signup input:focus-visible,.studio-signup button:focus-visible,.studio-follow:focus-visible,.studio-settings:focus-visible{outline:2px solid var(--bone);outline-offset:5px;}
 .studio-footer{flex-wrap:wrap;gap:24px;}
 .studio-privacy{width:100%;max-width:70ch;font-size:14px;}
 .studio-privacy summary{color:var(--bone);cursor:pointer;}
 .studio-privacy p{margin-top:12px;}
 .studio-settings{display:block;border:0;background:transparent;color:var(--bone);text-decoration:underline;text-underline-offset:4px;font:14px/1.5 Arial,sans-serif;cursor:pointer;margin-top:12px;}
-.studio-cookie{position:fixed;bottom:16px;right:16px;left:16px;max-width:600px;margin-left:auto;padding:24px;background:#151517;border:1px solid var(--dim);z-index:30;color:var(--bone);box-shadow:0 8px 40px #0008;max-height:calc(100dvh - 32px);overflow:auto;font:16px/1.5 Arial,sans-serif;}
-.studio-cookie[hidden],.studio-settings[hidden]{display:none;}
-.studio-cookie h2{font-size:24px;margin-bottom:10px;}
-.studio-cookie p{margin-bottom:18px;}
-.studio-cookie-actions{display:flex;flex-wrap:wrap;gap:12px;}
-.studio-cookie button{padding:12px 20px;border:1px solid var(--bone);background:transparent;color:var(--bone);font:14px/1.5 Arial,sans-serif;cursor:pointer;}
-.studio-cookie button:first-child{border-color:var(--rust);}
-@media(max-width:700px){.studio-signup{grid-template-columns:1fr;gap:24px;}header{flex-wrap:wrap;gap:14px;padding:18px 6vw;}nav{display:flex;flex-wrap:wrap;gap:10px 18px;}nav a{margin-left:0;}.studio-cookie{padding:20px;}.studio-signup{scroll-margin-top:160px;}}
+
+.studio-settings[hidden]{display:none;}
+
+
+
+
+
+@media(max-width:700px){.studio-signup{grid-template-columns:1fr;gap:24px;}header{flex-wrap:wrap;gap:14px;padding:18px 6vw;}nav{display:flex;flex-wrap:wrap;gap:10px 18px;}nav a{margin-left:0;}.studio-signup{scroll-margin-top:160px;}}
