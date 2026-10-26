@@ -138,7 +138,7 @@ def audit() -> list[str]:
             errors.append(f"{filename}: canonical URL mismatch")
         if 'name="twitter:card"' not in html or 'property="og:image"' not in html:
             errors.append(f"{filename}: missing social preview metadata")
-        jsonld = re.findall(r'<script type="application/ld\\+json">(.*?)</script>', html, flags=re.S)
+        jsonld = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, flags=re.S)
         if not jsonld:
             errors.append(f"{filename}: missing structured data")
         for block in jsonld:
@@ -146,7 +146,7 @@ def audit() -> list[str]:
                 json.loads(block)
             except json.JSONDecodeError as exc:
                 errors.append(f"{filename}: invalid JSON-LD: {exc}")
-        for image in re.findall(r'<img\\b[^>]*?src="([^"]+)"', html):
+        for image in re.findall(r'<img\b[^>]*?src="([^"]+)"', html):
             if not image.startswith(("http://", "https://")) and not (ROOT / image).is_file():
                 errors.append(f"{filename}: missing artwork image {image}")
     sitemap = ROOT / "sitemap.xml"
@@ -184,3 +184,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
