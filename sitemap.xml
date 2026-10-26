@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://kimberlyreising.com/</loc></url>
-  <url><loc>https://kimberlyreising.com/queen-on-the-board.html</loc></url>
-  <url><loc>https://kimberlyreising.com/tenfold-ascension.html</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://kimberlyreising.com/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <image:image>
+      <image:loc>https://kimberlyreising.com/images/opt/queen-960.webp</image:loc>
+      <image:title>Queen on the Board</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://kimberlyreising.com/images/opt/tenfold-960.webp</image:loc>
+      <image:title>Tenfold Ascension</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kimberlyreising.com/queen-on-the-board</loc>
+    <lastmod>2026-10-26</lastmod>
+    <image:image>
+      <image:loc>https://kimberlyreising.com/images/QUEEN_ON_THE_BOARD.webp</image:loc>
+      <image:title>Queen on the Board</image:title>
+      <image:caption>22 × 30 inch original graphite drawing by Kimberly Nichole Reising</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kimberlyreising.com/tenfold-ascension</loc>
+    <lastmod>2026-10-26</lastmod>
+    <image:image>
+      <image:loc>https://kimberlyreising.com/images/TENFOLD_ASCENSION.webp</image:loc>
+      <image:title>Tenfold Ascension</image:title>
+      <image:caption>Mixed-media drawing by Kimberly Nichole Reising</image:caption>
+    </image:image>
+  </url>
 </urlset>

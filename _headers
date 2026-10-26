@@ -1,0 +1,11 @@
+# Netlify headers. Images are replaced occasionally under the same name, so cache for a week, not a year.
+/images/*
+  Cache-Control: public, max-age=604800
+  X-Content-Type-Options: nosniff
+/assets/*
+  Cache-Control: public, max-age=3600
+  X-Content-Type-Options: nosniff
+/favicon.svg
+  Cache-Control: public, max-age=86400
+/apple-touch-icon.png
+  Cache-Control: public, max-age=86400
