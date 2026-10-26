@@ -3,8 +3,10 @@
 
 from __future__ import annotations
 
+import json
 import re
 import sys
+from xml.etree import ElementTree as ET
 from collections import defaultdict
 from html.parser import HTMLParser
 from pathlib import Path
@@ -118,6 +120,49 @@ def audit() -> list[str]:
         if len(titles) > 1:
             errors.append(f"Duplicate Stripe link shared by {', '.join(titles)}: {href}")
 
+    # Verify SEO essentials without changing pricing, payment or tracking code.
+    pages = {
+        "index.html": "https://kimberlyreising.com/",
+        "queen-on-the-board.html": "https://kimberlyreising.com/queen-on-the-board.html",
+        "tenfold-ascension.html": "https://kimberlyreising.com/tenfold-ascension.html",
+    }
+    for filename, canonical in pages.items():
+        page_path = ROOT / filename
+        if not page_path.is_file():
+            errors.append(f"SEO page missing: {filename}")
+            continue
+        html = page_path.read_text(encoding="utf-8")
+        if not re.search(r'<meta name="description" content="[^"]{50,}">', html):
+            errors.append(f"{filename}: missing meaningful meta description")
+        if f'<link rel="canonical" href="{canonical}">' not in html:
+            errors.append(f"{filename}: canonical URL mismatch")
+        if 'name="twitter:card"' not in html or 'property="og:image"' not in html:
+            errors.append(f"{filename}: missing social preview metadata")
+        jsonld = re.findall(r'<script type="application/ld\\+json">(.*?)</script>', html, flags=re.S)
+        if not jsonld:
+            errors.append(f"{filename}: missing structured data")
+        for block in jsonld:
+            try:
+                json.loads(block)
+            except json.JSONDecodeError as exc:
+                errors.append(f"{filename}: invalid JSON-LD: {exc}")
+        for image in re.findall(r'<img\\b[^>]*?src="([^"]+)"', html):
+            if not image.startswith(("http://", "https://")) and not (ROOT / image).is_file():
+                errors.append(f"{filename}: missing artwork image {image}")
+    sitemap = ROOT / "sitemap.xml"
+    if not sitemap.is_file():
+        errors.append("Missing sitemap.xml")
+    else:
+        try:
+            root = ET.parse(sitemap).getroot()
+            urls = {el.text for el in root.iter() if el.tag.endswith("}loc")}
+            if set(pages.values()) != urls:
+                errors.append("Sitemap URLs do not match canonical pages")
+        except ET.ParseError as exc:
+            errors.append(f"Invalid sitemap XML: {exc}")
+    robots = ROOT / "robots.txt"
+    if not robots.is_file() or "Sitemap: https://kimberlyreising.com/sitemap.xml" not in robots.read_text(encoding="utf-8"):
+        errors.append("robots.txt must advertise the sitemap")
     return errors
 
 
