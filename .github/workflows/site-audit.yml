@@ -1,4 +1,4 @@
-name: Verify KNR SEO bundle patch on staging
+name: Import exact KNR SEO performance bundle on staging
 on:
   push:
     branches:
@@ -6,45 +6,41 @@ on:
 permissions:
   contents: write
 jobs:
-  import-and-verify:
+  verify-and-import:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout original KNR site snapshot
-        uses: actions/checkout@v4
+      - name: Checkout KNR staging
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           persist-credentials: true
-      - name: Apply the uploaded SEO patch to its original base and verify against the supplied bundle
+      - name: Verify uploaded bundle and create a separate import branch
         shell: bash
         run: |
           set -euo pipefail
-          git fetch origin main
-          git show origin/main:knr-seo-patch.patch > "$RUNNER_TEMP/knr-seo-patch.patch"
-          echo "PATCH STATISTICS:"
-          git apply --stat "$RUNNER_TEMP/knr-seo-patch.patch"
-          git apply --check "$RUNNER_TEMP/knr-seo-patch.patch"
-          git apply --binary "$RUNNER_TEMP/knr-seo-patch.patch"
-          # Restore the original audit workflow from the shared base:
-          # this temporary test workflow must never appear on the live site.
-          git checkout 9b53d07ded413a1d4200d33df67899dd44423c63 -- .github/workflows/site-audit.yml
-          git add -A
-          actual="$(git write-tree)"
-          expected="fcf9f295fb7e3c8e01153498e282e0e54109b75d"
-          echo "Applied patch tree: $actual"
-          echo "Bundle snapshot tree: $expected"
-          if [[ "$actual" != "$expected" ]]; then
-            echo "::error::The uploaded patch does not produce the same source tree as the Git bundle. Do not integrate blindly."
-            git status --short
+          bundle="$(find . -maxdepth 2 -type f -iname '*seo*performance*.bundle' -print -quit)"
+          if [[ -z "$bundle" ]]; then
+            echo "Waiting for the original KNR SEO performance .bundle upload on staging."
+            exit 0
+          fi
+          echo "Found Git bundle at: $bundle"
+          git bundle list-heads "$bundle"
+          git bundle verify "$bundle"
+          git fetch "$bundle" refs/heads/seo-performance-2026-10
+          actual_commit="$(git rev-parse FETCH_HEAD)"
+          expected_commit="be5696f30b9f98452bb4ba1b92987dc40fefed71"
+          actual_tree="$(git rev-parse "FETCH_HEAD^{tree}")"
+          expected_tree="fcf9f295fb7e3c8e01153498e282e0e54109b75d"
+          echo "Actual bundle tip: $actual_commit"
+          echo "Actual bundle tree: $actual_tree"
+          if [[ "$actual_commit" != "$expected_commit" || "$actual_tree" != "$expected_tree" ]]; then
+            echo "::error::Bundle identity does not match the previously inspected original. Import refused."
             exit 1
           fi
-          echo "PASS: Uploaded patch and the provided Git bundle contain exactly identical website files."
-          echo "CHECK: Preserve originals and inspect SEO changes before merge to main."
-      - name: Commit exact verified bundle contents on staging branch only
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name "KNR Studio Verification"
-          git config user.email "knr-verification@users.noreply.github.com"
-          git commit -m "Stage verified KNR SEO performance bundle without publishing"
-          git push origin HEAD:seo-bundle-staging-2026-10-27
+          if git ls-remote --exit-code origin refs/heads/seo-bundle-imported-2026-10-27 >/dev/null; then
+            echo "Verified import branch already exists; refusing to overwrite."
+          else
+            git push origin "$actual_commit:refs/heads/seo-bundle-imported-2026-10-27"
+            echo "Imported exact bundle contents to seo-bundle-imported-2026-10-27; main was not touched."
+          fi
