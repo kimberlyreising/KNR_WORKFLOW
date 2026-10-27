@@ -120,12 +120,24 @@ def audit() -> list[str]:
         if len(titles) > 1:
             errors.append(f"Duplicate Stripe link shared by {', '.join(titles)}: {href}")
 
-    # Verify SEO essentials without changing pricing, payment or tracking code.
-    pages = {
-        "index.html": "https://kimberlyreising.com/",
-        "queen-on-the-board.html": "https://kimberlyreising.com/queen-on-the-board.html",
-        "tenfold-ascension.html": "https://kimberlyreising.com/tenfold-ascension.html",
-    }
+    # Derive artwork SEO pages from the gallery. Avoid hard-coding an outdated
+    # sitemap list when a new drawing gets its own detail page.
+    homepage = INDEX.read_text(encoding="utf-8")
+    detail_pages = re.findall(
+        r'<a\s+href="([A-Za-z0-9][A-Za-z0-9-]*\.html)"\s*>\s*Explore the artwork\s*</a>',
+        homepage,
+        flags=re.IGNORECASE,
+    )
+    if len(detail_pages) != len(parser.cards):
+        errors.append(
+            f"Expected {len(parser.cards)} artwork detail links; found {len(detail_pages)}"
+        )
+    if len(set(detail_pages)) != len(detail_pages):
+        errors.append("Duplicate artwork detail page links")
+
+    pages = {"index.html": "https://kimberlyreising.com/"}
+    for filename in detail_pages:
+        pages[filename] = f"https://kimberlyreising.com/{filename}"
     for filename, canonical in pages.items():
         page_path = ROOT / filename
         if not page_path.is_file():
