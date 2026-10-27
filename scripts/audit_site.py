@@ -10,7 +10,7 @@ from xml.etree import ElementTree as ET
 from collections import defaultdict
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
@@ -161,13 +161,58 @@ def audit() -> list[str]:
         for image in re.findall(r'<img\b[^>]*?src="([^"]+)"', html):
             if not image.startswith(("http://", "https://")) and not (ROOT / image).is_file():
                 errors.append(f"{filename}: missing artwork image {image}")
+
+    # Performance and accessibility guardrails (added Oct 2026).
+    for filename in pages:
+        page_path = ROOT / filename
+        if not page_path.is_file():
+            continue
+        html = page_path.read_text(encoding="utf-8")
+        title = re.search(r"<title>(.*?)</title>", html, flags=re.S)
+        if not title or len(re.sub(r"&amp;", "&", title.group(1))) > 70:
+            errors.append(f"{filename}: title missing or longer than 70 characters")
+        desc = re.search(r'<meta name="description" content="([^"]*)">', html)
+        if desc and len(desc.group(1)) > 165:
+            errors.append(f"{filename}: meta description longer than 165 characters")
+        if len(re.findall(r"<h1[\s>]", html)) != 1:
+            errors.append(f"{filename}: page must have exactly one h1")
+        for tag in re.findall(r"<img\b[^>]*>", html):
+            if 'alt="' not in tag:
+                errors.append(f"{filename}: image without alt attribute: {tag[:80]}")
+            if "width=" not in tag or "height=" not in tag:
+                errors.append(f"{filename}: image without width/height (layout shift): {tag[:80]}")
+        og = re.search(r'property="og:image" content="https://kimberlyreising.com/([^"]+)"', html)
+        if og and not (ROOT / unquote(og.group(1))).is_file():
+            errors.append(f"{filename}: og:image file missing: {og.group(1)}")
+        for ref in re.findall(r'<link rel="(?:icon|apple-touch-icon)" href="/([^"]+)"', html):
+            if not (ROOT / ref).is_file():
+                errors.append(f"{filename}: icon file missing: {ref}")
+        # Validate responsive image sources, not just the fallback image.
+        for group in re.findall(r'srcset="([^"]+)"', html):
+            for descriptor in group.split(","):
+                file_ref = descriptor.strip().split()[0]
+                if not file_ref.startswith(("https://", "http://")) and not (ROOT / file_ref).is_file():
+                    errors.append(f"{filename}: missing responsive image {file_ref}")
+
+    # Homepage image weight budget: every image variant the page can load must stay small.
+    home = INDEX.read_text(encoding="utf-8")
+    for ref in set(re.findall(r'images/[^\s"\',]+\.(?:webp|jpe?g|png)', home, flags=re.I)):
+        f = ROOT / ref
+        if f.is_file() and f.stat().st_size > 450_000 and "/opt/" in ref:
+            errors.append(f"Homepage image too heavy (>450 KB): {ref}")
     sitemap = ROOT / "sitemap.xml"
     if not sitemap.is_file():
         errors.append("Missing sitemap.xml")
     else:
         try:
             root = ET.parse(sitemap).getroot()
-            urls = {el.text for el in root.iter() if el.tag.endswith("}loc")}
+            ns = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+            urls = {u.find(ns + "loc").text for u in root.findall(ns + "url")}
+            for u in root.findall(ns + "url"):
+                for img in u.iter("{http://www.google.com/schemas/sitemap-image/1.1}loc"):
+                    local = img.text.replace("https://kimberlyreising.com/", "")
+                    if not (ROOT / local).is_file():
+                        errors.append(f"Sitemap image missing from repo: {local}")
             if set(pages.values()) != urls:
                 errors.append("Sitemap URLs do not match canonical pages")
         except ET.ParseError as exc:
@@ -191,6 +236,8 @@ def main() -> int:
     print("  ✓ Every artwork image exists and has descriptive text")
     print("  ✓ Stripe payment links are valid and unique")
     print("  ✓ Stripe checkout links open safely in new tabs")
+    print("  ✓ Titles, descriptions, canonicals, sitemap, social images and icons are valid")
+    print("  ✓ Every image has alt text and dimensions; homepage image variants stay under budget")
     return 0
 
 

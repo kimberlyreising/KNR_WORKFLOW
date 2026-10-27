@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://kimberlyreising.com/</loc></url>
-  <url><loc>https://kimberlyreising.com/queen-on-the-board.html</loc></url>
-  <url><loc>https://kimberlyreising.com/tenfold-ascension.html</loc></url>
-  <url><loc>https://kimberlyreising.com/herself.html</loc></url>
-  <url><loc>https://kimberlyreising.com/philadelphia-america-250.html</loc></url>
-  <url><loc>https://kimberlyreising.com/dark-flower-the-lounge.html</loc></url>
-  <url><loc>https://kimberlyreising.com/dancing-singing-sunflower.html</loc></url>
-  <url><loc>https://kimberlyreising.com/joke-joker-is-on-you.html</loc></url>
-  <url><loc>https://kimberlyreising.com/corset-stitched.html</loc></url>
-  <url><loc>https://kimberlyreising.com/what-lies-within.html</loc></url>
-  <url><loc>https://kimberlyreising.com/oysters-and-pearl.html</loc></url>
-  <url><loc>https://kimberlyreising.com/darts-vs-octopus.html</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>https://kimberlyreising.com/</loc><lastmod>2026-10-27</lastmod>
+    <image:image><image:loc>https://kimberlyreising.com/images/opt/queen-960.webp</image:loc><image:title>Queen on the Board</image:title></image:image>
+    <image:image><image:loc>https://kimberlyreising.com/images/opt/tenfold-960.webp</image:loc><image:title>Tenfold Ascension</image:title></image:image>
+  </url>
+  <url><loc>https://kimberlyreising.com/herself.html</loc><lastmod>2026-10-27</lastmod><image:image><image:loc>https://kimberlyreising.com/images/herself.jpg</image:loc><image:title>HERSELF</image:title></image:image></url>
+  <url><loc>https://kimberlyreising.com/philadelphia-america-250.html</loc><lastmod>2026-10-27</lastmod><image:image><image:loc>https://kimberlyreising.com/images/america250.jpg</image:loc><image:title>PHILADELPHIA AMERICA 250</image:title></image:image></url>
+  <url><loc>https://kimberlyreising.com/dark-flower-the-lounge.html</loc><lastmod>2026-10-27</lastmod><image:image><image:loc>https://kimberlyreising.com/images/darkflower.png</image:loc><image:title>DARK FLOWER THE LOUNGE</image:title></image:image></url>
+  <url><loc>https://kimberlyreising.com/dancing-singing-sunflower.html</loc><lastmod>2026-10-27</lastmod><image:image><image:loc>https://kimberlyreising.com/images/DANCING_SINGING SUNFLOWER.jpeg</image:loc><image:title>DANCING SINGING SUNFLOWER</image:title></image:image></url>
+  <url><loc>https://kimberlyreising.com/joke-joker-is-on-you.html</loc><lastmod>2026-10-27</lastmod><image:image><image:loc>https://kimberlyreising.com/images/jokeisonyou.png</image:loc><image:title>JOKE JOKER IS ON YOU</image:title></image:image></url>
+  <url><loc>https://kimberlyreising.com/corset-stitched.html</loc><lastmod>2026-10-27</lastmod><image:image><image:loc>https://kimberlyreising.com/images/csxx.jpg</image:loc><image:title>CORSET STITCHED</image:title></image:image></url>
+  <url><loc>https://kimberlyreising.com/what-lies-within.html</loc><lastmod>2026-10-27</lastmod><image:image><image:loc>https://kimberlyreising.com/images/whatliesin.jpg</image:loc><image:title>WHAT LIES WITHIN</image:title></image:image></url>
+  <url><loc>https://kimberlyreising.com/oysters-and-pearl.html</loc><lastmod>2026-10-27</lastmod><image:image><image:loc>https://kimberlyreising.com/images/OYSTER_AND_PEARL.JPG</image:loc><image:title>OYSTERS AND PEARL</image:title></image:image></url>
+  <url><loc>https://kimberlyreising.com/darts-vs-octopus.html</loc><lastmod>2026-10-27</lastmod><image:image><image:loc>https://kimberlyreising.com/images/DARTS_VS_OCTOPUS.jpg</image:loc><image:title>DARTS VS OCTOPUS</image:title></image:image></url>
+  <url><loc>https://kimberlyreising.com/tenfold-ascension.html</loc><lastmod>2026-10-27</lastmod><image:image><image:loc>https://kimberlyreising.com/images/TENFOLD_ASCENSION.webp</image:loc><image:title>TENFOLD ASCENSION</image:title></image:image></url>
+  <url><loc>https://kimberlyreising.com/queen-on-the-board.html</loc><lastmod>2026-10-27</lastmod><image:image><image:loc>https://kimberlyreising.com/images/QUEEN_ON_THE_BOARD.webp</image:loc><image:title>QUEEN ON THE BOARD</image:title></image:image></url>
 </urlset>
