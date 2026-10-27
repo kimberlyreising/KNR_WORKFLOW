@@ -19,11 +19,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          bundle="$(find . -maxdepth 2 -type f -iname '*seo*performance*.bundle' -print -quit)"
-          if [[ -z "$bundle" ]]; then
-            echo "Waiting for the original KNR SEO performance .bundle upload on staging."
-            exit 0
-          fi
+          bundle="$RUNNER_TEMP/knr-seo-performance.bundle"
+          git fetch origin main
+          git show origin/main:knr-seo-performance.bundle > "$bundle"
+          test -s "$bundle"
+          echo "Retrieved bundle uploaded to main, without applying anything to main."
           echo "Found Git bundle at: $bundle"
           git bundle list-heads "$bundle"
           git bundle verify "$bundle"
