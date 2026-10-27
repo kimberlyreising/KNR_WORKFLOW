@@ -10,7 +10,7 @@ from xml.etree import ElementTree as ET
 from collections import defaultdict
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
@@ -182,7 +182,7 @@ def audit() -> list[str]:
             if "width=" not in tag or "height=" not in tag:
                 errors.append(f"{filename}: image without width/height (layout shift): {tag[:80]}")
         og = re.search(r'property="og:image" content="https://kimberlyreising.com/([^"]+)"', html)
-        if og and not (ROOT / og.group(1)).is_file():
+        if og and not (ROOT / unquote(og.group(1))).is_file():
             errors.append(f"{filename}: og:image file missing: {og.group(1)}")
         for ref in re.findall(r'<link rel="(?:icon|apple-touch-icon)" href="/([^"]+)"', html):
             if not (ROOT / ref).is_file():
