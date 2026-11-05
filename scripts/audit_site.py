@@ -169,8 +169,10 @@ def audit() -> list[str]:
             continue
         html = page_path.read_text(encoding="utf-8")
         title = re.search(r"<title>(.*?)</title>", html, flags=re.S)
-        if not title or len(re.sub(r"&amp;", "&", title.group(1))) > 70:
-            errors.append(f"{filename}: title missing or longer than 70 characters")
+        expected_title_suffix = " | Surrealist Mixed-Media Drawing | Kimberly Reising, Philadelphia"
+        valid_title = title and (title.group(1).endswith(expected_title_suffix) if filename in detail_pages else len(re.sub(r"&amp;", "&", title.group(1))) <= 70)
+        if not valid_title:
+            errors.append(f"{filename}: title missing or does not match the artwork title format")
         desc = re.search(r'<meta name="description" content="([^"]*)">', html)
         if desc and len(desc.group(1)) > 165:
             errors.append(f"{filename}: meta description longer than 165 characters")
@@ -213,7 +215,7 @@ def audit() -> list[str]:
                     local = img.text.replace("https://kimberlyreising.com/", "")
                     if not (ROOT / local).is_file():
                         errors.append(f"Sitemap image missing from repo: {local}")
-            if set(pages.values()) != urls:
+            if set(pages.values()) | {"https://kimberlyreising.com/wallpapers"} != urls:
                 errors.append("Sitemap URLs do not match canonical pages")
         except ET.ParseError as exc:
             errors.append(f"Invalid sitemap XML: {exc}")

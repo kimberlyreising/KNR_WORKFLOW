@@ -153,7 +153,7 @@
         if (response.status === 429) throw new Error("Please wait a few minutes and try again.");
         throw new Error("Your signup could not be saved. Please try again, or use the contact form below.");
       }
-      status.textContent = "Thank you—your signup request has been received.";
+      status.textContent = "Thank you—your signup request has been received. "; const download = document.createElement("a"); download.href = "https://gallery.kimberlyreising.com/downloads/knr_phone_wallpapers.zip"; download.download = "knr_phone_wallpapers.zip"; download.textContent = "Download your three wallpapers"; status.appendChild(download);
       track("generate_lead", { lead_type: "studio_signup" });
       form.reset();
     } catch (error) {
