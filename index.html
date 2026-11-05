@@ -72,7 +72,7 @@
   .section-head h2{font-size:clamp(28px,3.5vw,42px);}
   .section-head p{color:var(--dim); font-family:Arial,sans-serif; font-size:13px; max-width:30ch;}
   .about{display:grid; grid-template-columns:.9fr 1.1fr; gap:50px; align-items:center;}
-  .about img{width:100%; aspect-ratio:4/5; object-fit:cover; border:1px solid var(--line);}
+  .about img{display:block; width:100%; height:auto; aspect-ratio:auto; object-fit:contain; border:1px solid var(--line);}
   .about-text p{color:var(--dim); font-size:16px; margin-bottom:18px; max-width:52ch;}
   .about-text p:first-child{color:var(--bone); font-size:18px;}
   @media (max-width:700px){.about{grid-template-columns:1fr;}}
